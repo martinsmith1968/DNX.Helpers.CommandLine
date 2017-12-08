@@ -1,7 +1,7 @@
 # DNX.Helpers.CommandLine
 
 ![DNX Solutions Logo](http://dnx-solutions.co.uk/favicon-32x32.png)
-[DNX.Helpers.CommandLine](http://github.com/martinsmith1968/DNX.Helpers.CommandLine) is a .NET package that contains the bits that help working with the excellent [Command Line parser](https://github.com/gsscoder/commandline) library from Giacomo Stelluti Scala.
+[DNX.Helpers.CommandLine](http://github.com/commandlineparser/commandline) is a .NET package that contains the bits that help working with the excellent [Command Line parser](https://github.com/gsscoder/commandline) library from Giacomo Stelluti Scala.
 
 > Note:
 > This package is currently based around v2.1.1-beta which is yet to be officially released but contains all the functionality I'm interesting in building upon.
