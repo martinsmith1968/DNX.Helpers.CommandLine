@@ -8,7 +8,7 @@ namespace DNX.Helpers.CommandLine.Help
     /// </summary>
     public static class Templates
     {
-        public const string ProgramHeader = "{{Program.Title}} v{{Program.SimplifiedVersion}}{% if Program.Description %} - {{Program.Description}}{% endif %}";
+        public const string ProgramHeader = "{{Program.Title}} v{{Program.SimplifiedVersion}}{% if Program.Description.Length > 0 %} - {{Program.Description}}{% endif %}";
 
         public const string ProgramUsage = "{{Program.FileName}}{% for a in Arguments.Positional %} {% if a.Optional %}{ {% endif %}[{{a.Name}}]{% if a.Optional %} }{% endif %}{% endfor %}{% if Arguments.Options %} { [options] }{% endif %}";
 

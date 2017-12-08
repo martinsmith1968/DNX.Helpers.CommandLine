@@ -8,6 +8,12 @@ Problems with CommandLine:
 - --help/--version interception to display help screen other than the default
 
 
+Links
+-----
+https://github.com/gsscoder/commandline/wiki/Latest-Version#usage-attribute
+https://github.com/gsscoder/commandline/wiki/Display-A-Help-Screen
+
+
 Usage
 -----
 
@@ -76,4 +82,66 @@ only via the default configured HelpWriter though
 
 
 
+
+
+
+
+
+Sample Output
+-------------
+
+----------------------------------------------------------------------------------------------------
+Default output from ParseArguments<>
+
+CommandLine 2.0.275-beta
+Copyright (c) 2005 - 2015 Giacomo Stelluti Scala
+
+ERROR(S):
+  Required option 'p, position' is missing.
+  A required value not bound to option name is missing.
+USAGE:
+Default:
+  CommandLine [filename]
+
+  -p, --position       Required. Where to start from
+
+  -l, --lines          (Default: 5) How many lines to process
+
+  --help               Display this help screen.
+
+  --version            Display version information.
+
+  FileName (pos. 0)    Required. The filename to process
+
+
+----------------------------------------------------------------------------------------------------
+Customising via HelpText.AutoBuild
+
+CommandLine 2.0.275-beta
+Copyright (c) 2005 - 2015 Giacomo Stelluti Scala
+ 
+USAGE:
+Default:
+  CommandLine [filename]
+
+  -p, --position       Required. Where to start from Valid values: Above, Below
+  -l, --lines          (Default: 5) How many lines to process
+  --help               Display this help screen.
+  --version            Display version information.
+  FileName (pos. 0)    Required. The filename to process
+
+
+----------------------------------------------------------------------------------------------------
+Templated help from DNX.Helpers.CommandLine
+
+Test.DNX.Helpers.CommandLine v1 - 
+Copyright © 2017 DNX Solutions Ltd
+
+Usage:
+Test.DNX.Helpers.CommandLine.dll [FileName] { [options] }
+
+Options:
+-p, --position  Where to start from
+-l, --lines  How many lines to process
+-?, --help  Display this Help page
 
