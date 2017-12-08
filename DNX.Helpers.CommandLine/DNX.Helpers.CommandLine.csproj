@@ -39,8 +39,8 @@
       <HintPath>..\packages\DNX.Helpers.1.0.21\lib\net452\DNX.Helpers.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="DNX.Helpers.Console, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DNX.Helpers.Console.1.2.1\lib\net452\DNX.Helpers.Console.dll</HintPath>
+    <Reference Include="DNX.Helpers.Console, Version=1.2.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DNX.Helpers.Console.1.2.2\lib\net452\DNX.Helpers.Console.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="DotLiquid, Version=2.0.232.0, Culture=neutral, PublicKeyToken=82e46016ecf9f07c, processorArchitecture=MSIL">

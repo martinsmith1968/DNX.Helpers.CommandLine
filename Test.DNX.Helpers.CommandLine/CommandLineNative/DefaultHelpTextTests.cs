@@ -5,6 +5,7 @@ using System.Text;
 using CommandLine;
 using CommandLine.Text;
 using DNX.Helpers.CommandLine.Help;
+using DNX.Helpers.Console;
 using NUnit.Framework;
 
 namespace Test.DNX.Helpers.CommandLine.CommandLineNative
@@ -92,7 +93,9 @@ namespace Test.DNX.Helpers.CommandLine.CommandLineNative
                     text.AddEnumValuesToHelpText = true;
                     return text;
                 },
-                example => example
+                example => example,
+                false,
+                ConsoleHelper.GetConsoleWidth()
                 );
             var autoHelpText = autoHelp.ToString();
 
