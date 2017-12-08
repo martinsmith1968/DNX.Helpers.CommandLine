@@ -1,0 +1,79 @@
+CommandLine Parser Extensions
+=============================
+
+Problems with CommandLine:
+- Help screen not consistent between invoked automatically on error or via HelpBuilder
+- Help text not customisable enough (doesn't show command line structure)
+- Parser customisation done inline away from Arguments classes and the defaults are not ideal
+- --help/--version interception to display help screen other than the default
+
+
+Usage
+-----
+
+Parser.Default
+    returns a Parser instance
+
+
+Configuration
+-------------
+
+var parser = new Parser(config => config.HelpWriter = Console.Out);
+
+
+Single Options
+--------------
+
+var result = parser.ParseArguments<T>(args);
+    returns a ParserResult<T>
+    which is really a Parsed<T> or NotParsed<T>
+
+or can do
+
+var result = parser.ParseArguments<T>(args)
+    .WithParsed(options => ...)     // Type T
+    .WithNotParsed(errors => ...)   // IEnumerable<Error>
+
+or even
+
+var returnCode = parser.ParseArguments<T>(args)
+    .MapResult(
+        options => RunAndReturnExitCode(options),
+        _ => 1
+    );
+
+
+Verbs
+-----
+
+var result = parser.ParseArguments<T1, T2, T2>(args)
+    .WithParsed<T1>(opts => ...)
+    .WithParsed<T2>(opts => ...)
+    .WithParsed<T3>(opts => ...)
+    .WithNotParsed(errors => ...)
+
+or
+
+var returnCode = parser.ParseArguments<T1, T2, T3>(args)
+    .MapResult(
+        (T1 options) => RunT1AndReturnExitCode(options),
+        (T2 options) => RunT2AndReturnExitCode(options),
+        (T3 options) => RunT3AndReturnExitCode(options),
+        errs => 1
+    );
+
+
+Built in Commands
+-----------------
+
+--help      triggers help output
+--version   triggers version output
+
+only via the default configured HelpWriter though
+
+
+
+
+
+
+

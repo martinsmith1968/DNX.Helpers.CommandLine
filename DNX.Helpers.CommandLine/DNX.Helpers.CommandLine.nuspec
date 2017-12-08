@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$-beta</version>
+    <title>$title$</title>
+    <authors>Martin Smith</authors>
+    <owners>DNX Solutions Ltd</owners>
+  <!--
+    <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
+  -->
+    <projectUrl>https://github.com/martinsmith1968/DNX.Helpers.CommandLine</projectUrl>
+    <iconUrl>http://www.dnx-solutions.co.uk/favicon-32x32.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Initial release</releaseNotes>
+    <copyright>Copyright 2017 DNX Solutions Ltd</copyright>
+    <tags>DNX helpers extensions commandline parser</tags>
+    <dependencies>
+      <dependency id="CommandLineParser" version="2.1.1-beta"/>
+      <dependency id="DotLiquid" version="2.0"/>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Samples/Program.cs" target="content" />
+    <file src="Samples/Arguments.cs" target="content" />
+  </files>
+</package>
