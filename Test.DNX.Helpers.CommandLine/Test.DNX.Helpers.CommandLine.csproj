@@ -46,8 +46,8 @@
       <HintPath>..\packages\DNX.Helpers.1.0.21\lib\net452\DNX.Helpers.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="DNX.Helpers.Console, Version=1.2.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DNX.Helpers.Console.1.2.2\lib\net452\DNX.Helpers.Console.dll</HintPath>
+    <Reference Include="DNX.Helpers.Console, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DNX.Helpers.Console.1.2.3\lib\net452\DNX.Helpers.Console.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FizzWare.NBuilder, Version=5.0.0.138, Culture=neutral, processorArchitecture=MSIL">
