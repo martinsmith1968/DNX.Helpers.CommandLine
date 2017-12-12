@@ -19,7 +19,7 @@ namespace DNX.Helpers.CommandLine
             settings.IgnoreUnknownArguments    = false;
             settings.CaseInsensitiveEnumValues = true;
             settings.HelpWriter                = null;
-            settings.MaximumDisplayWidth       = ConsoleHelper.GetConsoleWidth(null) ?? settings.MaximumDisplayWidth;
+            settings.MaximumDisplayWidth       = ConsoleHelper.GetConsoleWidth(settings.MaximumDisplayWidth);
         };
 
         /// <summary>
