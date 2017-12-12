@@ -19,6 +19,16 @@ namespace DNX.Helpers.CommandLine.Help.Maps
         protected IList<PositionalArgumentInfo> PositionalArguments = new List<PositionalArgumentInfo>();
         protected IList<OptionArgumentInfo> OptionArguments = new List<OptionArgumentInfo>();
 
+        public IOrderedEnumerable<KeyValuePair<string, List<OptionArgumentInfo>>> OptionArgumentsByGroup { get; private set; }
+
+        public string ShortcutPrefix { get; private set; }
+
+        public string NamePrefix { get; private set; }
+
+        public int MaxOptionShortcutLength { get; private set; }
+
+        public int MaxOptionNameLength { get; private set; }
+
         public IList<IDictionary<string, object>> Positional
         {
             get
@@ -44,23 +54,36 @@ namespace DNX.Helpers.CommandLine.Help.Maps
             Type = type;
 
             GetArgumentProperties(type)
-                .Where(t => ArgumentInfo.IsPositionalArgument(t))
+                .Where(p => ArgumentInfo.IsPositionalArgument(p))
+                .Select(p => ArgumentInfo.GetPositionalArgumentInfo(p))
                 .ToList()
-                .ForEach(p => PositionalArguments.Add(ArgumentInfo.GetPositionalArgumentInfo(p)));
+                .ForEach(p => PositionalArguments.Add(p));
 
             GetArgumentProperties(type)
-                .Where(t => ArgumentInfo.IsOptionArgument(t))
+                .Where(p => ArgumentInfo.IsOptionArgument(p))
+                .Select(p => ArgumentInfo.GetOptionArgumentInfo(p))
+                .Union(new [] { GenerateHelpOption() })
                 .ToList()
-                .ForEach(p => OptionArguments.Add(ArgumentInfo.GetOptionArgumentInfo(p)));
-            OptionArguments.Add(GenerateHelpOption());
+                .ForEach(a => OptionArguments.Add(a));
 
             OptionArguments
                 .ToList()
                 .ForEach(opt =>
                 {
-                    opt.MaxShortcutLength = OptionArguments.Max(o => (o.Shortcut ?? string.Empty).Length);
-                    opt.MaxNameLength     = OptionArguments.Max(o => (o.Name ?? string.Empty).Length);
+                    MaxOptionShortcutLength = OptionArguments.Max(o => (o.Shortcut ?? string.Empty).Length);
+                    MaxOptionNameLength     = OptionArguments.Max(o => (o.Name ?? string.Empty).Length);
                 });
+
+            var groups = OptionArguments
+                .GroupBy(o => o.GroupName)
+                .ToDictionary(o => o.Key, o => o.Min(x => x.GroupPosition))
+                ;
+
+            OptionArgumentsByGroup = OptionArguments
+                .GroupBy(o => o.GroupName)
+                .ToDictionary(o => o.Key, o => o.ToList())
+                .OrderBy(g => groups[g.Key])
+                ;
         }
 
         private static OptionArgumentInfo GenerateHelpOption()
@@ -75,7 +98,7 @@ namespace DNX.Helpers.CommandLine.Help.Maps
             return OptionArgumentInfo.Create(null, helpOption);
         }
 
-        private IList<PropertyInfo> GetArgumentProperties(Type type)
+        private static IEnumerable<PropertyInfo> GetArgumentProperties(Type type)
         {
             return type
                 .GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty)
@@ -89,9 +112,26 @@ namespace DNX.Helpers.CommandLine.Help.Maps
         /// <returns>System.Object.</returns>
         public static ArgumentsMap Create<T>()
         {
-            var argumentsMap = new ArgumentsMap(typeof(T));
+            return Create(typeof(T));
+        }
+
+        /// <summary>
+        /// Creates the specified type.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>ArgumentsMap.</returns>
+        public static ArgumentsMap Create(Type type)
+        {
+            var argumentsMap = new ArgumentsMap(type);
 
             return argumentsMap;
+        }
+
+        public void ApplyParserSettings(ParserSettings parserSettings)
+        {
+            NamePrefix = parserSettings.EnableDashDash
+                ? "--"
+                : string.Empty;
         }
     }
 }
