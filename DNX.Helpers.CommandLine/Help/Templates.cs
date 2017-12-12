@@ -12,7 +12,8 @@ namespace DNX.Helpers.CommandLine.Help
 
         public const string ProgramUsage = "{{Program.FileName}}{% for a in Arguments.Positional %} {% if a.Optional %}{ {% endif %}[{{a.Name}}]{% if a.Optional %} }{% endif %}{% endfor %}{% if Arguments.Options %} { [options] }{% endif %}";
 
-        public const string ProgramOption = "-{{ o.Shortcut }}{% if o.Name%}, --{{ o.Name }}{% else %}    {% endif %}{{ o.Pad }}  {{o.Description}}{% if o.ValueType %} ({{o.ValueType}}){% endif %}";
+        public const string ProgramOptionValueType = "{% if o.ValueList %} ({{ o.ValueList }}){% elseif o.ValueTypeName %} ({{o.ValueTypeName}}){% endif %}";
+        public static readonly string ProgramOption = "-{{ o.Shortcut }}{% if o.Name%}, --{{ o.Name }}{% else %}    {% endif %}{{ o.Pad }}  {{o.Description}}" + ProgramOptionValueType;
 
         /// <summary>
         /// The standard template lines

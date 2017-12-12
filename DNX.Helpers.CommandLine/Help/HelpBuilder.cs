@@ -1,7 +1,6 @@
 ﻿using CommandLine;
 using CommandLine.Text;
 using DNX.Helpers.Assemblies;
-using DNX.Helpers.CommandLine.CommandLine;
 using DNX.Helpers.CommandLine.Help.Maps;
 using DNX.Helpers.CommandLine.Templating;
 
@@ -70,9 +69,13 @@ namespace DNX.Helpers.CommandLine.Help
         {
             templateEngine.Reset();
 
+            var parserSettings = Parser.Default.Settings;    // TODO:
+
             var argumentsMap = ArgumentsMap.Create<T>();
+            argumentsMap.ApplyParserSettings(parserSettings);
 
             templateEngine.AddObject("Program", new AssemblyDetails(typeof(T).Assembly));
+            templateEngine.AddObject("ParserSettings", parserSettings);
             templateEngine.AddObject("Arguments", argumentsMap);
             templateEngine.AddObject("ParserResult", parserResult);
 

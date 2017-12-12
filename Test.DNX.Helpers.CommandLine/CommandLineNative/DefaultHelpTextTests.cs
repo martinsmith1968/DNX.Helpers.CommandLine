@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using CommandLine;
@@ -7,6 +6,7 @@ using CommandLine.Text;
 using DNX.Helpers.CommandLine.Help;
 using DNX.Helpers.Console;
 using NUnit.Framework;
+using Shouldly;
 
 namespace Test.DNX.Helpers.CommandLine.CommandLineNative
 {
@@ -14,7 +14,7 @@ namespace Test.DNX.Helpers.CommandLine.CommandLineNative
 
     internal class ArgumentsRaw1
     {
-        [Value(0, MetaName = "FileName", Required = true, HelpText = "The filename to process")]
+        [Value(0, MetaName = "FileNameX", Required = true, HelpText = "The filename to process")]
         public string FileName { get; set; }
 
         [Option('p', "position", Required = true, HelpText = "Where to start from")]
@@ -26,7 +26,7 @@ namespace Test.DNX.Helpers.CommandLine.CommandLineNative
 
     internal class ArgumentsUsage1
     {
-        [Value(0, MetaName = "FileName", Required = true, HelpText = "The filename to process")]
+        [Value(0, Required = true, HelpText = "The filename to process")]
         public string FileName { get; set; }
 
         [Option('p', "position", Required = true, HelpText = "Where to start from")]
@@ -65,6 +65,9 @@ namespace Test.DNX.Helpers.CommandLine.CommandLineNative
             // Assert
             var outputText = output.ToString();
             System.Console.WriteLine(outputText);
+
+            success.ShouldBeFalse();
+            failure.ShouldBeTrue();
         }
 
         [Test]
@@ -103,6 +106,9 @@ namespace Test.DNX.Helpers.CommandLine.CommandLineNative
 
             var outputText = output.ToString();
             System.Console.WriteLine(outputText);
+
+            success.ShouldBeFalse();
+            failure.ShouldBeTrue();
         }
     }
 }
