@@ -57,6 +57,7 @@
     <Compile Include="Help\HelpBuilder.cs" />
     <Compile Include="Help\Maps\ArgumentInfo.cs" />
     <Compile Include="Help\Maps\ArgumentsMap.cs" />
+    <Compile Include="Help\Maps\BaseArgumentInfo.cs" />
     <Compile Include="Help\Maps\IArgumentInfo.cs" />
     <Compile Include="Help\Maps\OptionArgumentInfo.cs" />
     <Compile Include="Help\Maps\ParserErrorInfo.cs" />
