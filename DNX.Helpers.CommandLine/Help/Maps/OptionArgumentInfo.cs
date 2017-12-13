@@ -10,55 +10,27 @@ namespace DNX.Helpers.CommandLine.Help.Maps
 {
     public class OptionArgumentInfo : BaseArgumentInfo
     {
-        public string Shortcut { get; set; }
+        public string Shortcut { get; protected set; }
 
-        public string GroupName { get; set; }
+        public string GroupName { get; protected set; }
 
-        public int GroupPosition { get; set; }
+        public int GroupPosition { get; protected set; }
 
         public bool HasGroup
         {
             get { return !string.IsNullOrEmpty(GroupName); }
         }
 
-        public bool Optional { get { return !Required; } }
-
-        public string ValueList { get; set; }
-
-        public string ValueSeparator { get; set; }
-
-        public OptionArgumentInfo(MemberInfo memberInfo)
-            : base(memberInfo)
+        public OptionArgumentInfo(MemberInfo memberInfo, OptionAttribute argument)
+            : base(memberInfo, argument)
         {
-        }
-
-        public static OptionArgumentInfo Create(MemberInfo memberInfo, OptionAttribute option)
-        {
-            if (option == null)
-            {
-                return null;
-            }
-
-            var instance = new OptionArgumentInfo(memberInfo)
-            {
-                Shortcut       = option.ShortName,
-                Name           = option.LongName,
-                Description    = option.HelpText,
-                GroupName      = GetGroupName(option.SetName),
-                GroupPosition  = GetGroupPosition(option.SetName),
-                Required       = option.Required,
-                DefaultValue   = option.Default == null ? null : option.Default.ToString(),
-                ValueSeparator = char.IsControl(option.Separator) ? "," : option.Separator.ToString(),
-            };
-
-            if (instance.ValueType != null && instance.ValueType.IsEnum)
-            {
-                var values = Enum.GetNames(instance.ValueType);
-
-                instance.ValueList = string.Join(instance.ValueSeparator, values);
-            }
-
-            return instance;
+            Shortcut       = argument.ShortName;
+            Name           = argument.LongName;
+            GroupName      = GetGroupName(argument.SetName);
+            GroupPosition  = GetGroupPosition(argument.SetName);
+            ValueSeparator = char.IsControl(argument.Separator)
+                ? ","
+                : argument.Separator.ToString();
         }
 
         private static string GetGroupName(string setName)
@@ -67,7 +39,7 @@ namespace DNX.Helpers.CommandLine.Help.Maps
                 .ToArray();
 
             var name = StringExtensions.CoalesceNullOrEmpty(parts)
-                ?? string.Empty;
+                       ?? string.Empty;
 
             return name;
         }
@@ -83,6 +55,13 @@ namespace DNX.Helpers.CommandLine.Help.Maps
             var position = positionText.ToInt32(50);
 
             return position;
+        }
+
+        public static OptionArgumentInfo Create(MemberInfo memberInfo, OptionAttribute option)
+        {
+            var instance = new OptionArgumentInfo(memberInfo, option);
+
+            return instance;
         }
     }
 }

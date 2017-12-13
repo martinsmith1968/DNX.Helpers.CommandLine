@@ -10,30 +10,39 @@ using Shouldly;
 
 namespace Test.DNX.Helpers.CommandLine.CommandLineNative
 {
-    internal enum PositionType {  Above, Below }
+    internal enum PositionType { Above, Below }
 
     internal class ArgumentsRaw1
     {
-        [Value(0, MetaName = "FileNameX", Required = true, HelpText = "The filename to process")]
+        [Value(0, MetaName = "FileName", Required = true, HelpText = "The filename to process")]
         public string FileName { get; set; }
 
-        [Option('p', "position", Required = true, HelpText = "Where to start from")]
+        [Value(1, MetaName = "Position", Required = false, Default = PositionType.Above, HelpText = "Where to start from")]
         public PositionType Position { get; set; }
 
         [Option('l', "lines", HelpText = "How many lines to process")]
         public int LineCount { get; set; }
+
+        [Option('t', "trim", HelpText = "Trim lines as they are read")]
+        public bool Trim { get; set; }
     }
 
     internal class ArgumentsUsage1
     {
-        [Value(0, Required = true, HelpText = "The filename to process")]
+        [Value(0, MetaName = "FileName", Required = true, HelpText = "The filename to process")]
         public string FileName { get; set; }
 
-        [Option('p', "position", Required = true, HelpText = "Where to start from")]
+        [Value(1, MetaName = "Position", Required = false, Default = PositionType.Above, HelpText = "Where to start from")]
         public PositionType Position { get; set; }
 
-        [Option('l', "lines", Default = 5, HelpText = "How many lines to process")]
+        [Option('l', "lines", Required = true, HelpText = "How many lines to process", MetaValue = "E.g. 50")]
         public int LineCount { get; set; }
+
+        [Option('t', "trim", HelpText = "Trim lines as they are read")]
+        public bool Trim { get; set; }
+
+        [Option('f', "footer", HelpText = "The footer text to write")]
+        public string FooterText { get; set; }
 
         [Usage]
         public static IEnumerable<Example> Examples
@@ -101,8 +110,10 @@ namespace Test.DNX.Helpers.CommandLine.CommandLineNative
                 ConsoleHelper.GetConsoleWidth()
                 );
             var autoHelpText = autoHelp.ToString();
+            System.Console.WriteLine(autoHelpText);
 
             var myHelpText = HelpBuilder.BuildTemplatedHelpText(result);
+            System.Console.WriteLine(myHelpText);
 
             var outputText = output.ToString();
             System.Console.WriteLine(outputText);

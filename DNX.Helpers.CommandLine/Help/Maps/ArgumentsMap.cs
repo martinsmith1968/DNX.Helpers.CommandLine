@@ -56,6 +56,7 @@ namespace DNX.Helpers.CommandLine.Help.Maps
             GetArgumentProperties(type)
                 .Where(p => ArgumentInfo.IsPositionalArgument(p))
                 .Select(p => ArgumentInfo.GetPositionalArgumentInfo(p))
+                .OrderBy(p => p.Position)
                 .ToList()
                 .ForEach(p => PositionalArguments.Add(p));
 
